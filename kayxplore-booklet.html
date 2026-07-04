@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>From Consumer to Creator — KayXplore</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@300;400;500;600;700&family=Caveat:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sage-dark:#5C6F52;
+    --sage:#8FA080;
+    --sage-pale:#E7ECE0;
+    --cream:#FBF8F1;
+    --cream-2:#F4EFE3;
+    --ink:#2E2B24;
+    --ink-soft:#5a5648;
+    --ochre:#C08A2E;
+    --berry:#7A4A52;
+    --line:#c9cabb;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:#2c2c28;font-family:'Work Sans',sans-serif;color:var(--ink);}
+
+  .toolbar{
+    position:sticky;top:0;z-index:50;
+    background:var(--sage-dark);color:var(--cream);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:12px 24px;font-family:'Space Mono',monospace;font-size:12px;
+    letter-spacing:0.04em;
+  }
+  .toolbar .brand{font-family:'Fraunces',serif;font-size:16px;letter-spacing:0.02em;}
+  .toolbar button{
+    background:var(--ochre);color:#2E2B24;border:none;padding:9px 18px;
+    border-radius:3px;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;
+    cursor:pointer;letter-spacing:0.03em;
+  }
+  .toolbar button:hover{background:#d59f42;}
+
+  .book{
+    max-width:900px;margin:36px auto 80px;display:flex;flex-direction:column;gap:34px;
+    padding:0 16px;
+  }
+
+  .page{
+    background:var(--cream);
+    width:100%;
+    aspect-ratio:210/297;
+    position:relative;
+    padding:40px 44px 38px;
+    box-shadow:0 18px 40px rgba(0,0,0,0.35);
+    border-radius:2px;
+    overflow:hidden;
+  }
+
+  .sprig-mount{position:absolute;top:28px;right:34px;display:flex;align-items:center;gap:8px;}
+  .sprig-mount svg{width:32px;height:32px;}
+  .sprig-mount .n{font-family:'Space Mono',monospace;font-size:10.5px;color:var(--sage-dark);letter-spacing:0.04em;}
+
+  .kaymark{
+    position:absolute;top:32px;left:44px;
+    font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:0.12em;
+    color:var(--sage-dark);text-transform:uppercase;
+  }
+
+  .eyebrow{
+    font-family:'Space Mono',monospace;font-size:10.5px;letter-spacing:0.1em;
+    text-transform:uppercase;color:var(--ochre);margin-bottom:5px;display:block;
+  }
+  h1.page-title{
+    font-family:'Fraunces',serif;font-weight:600;font-size:26px;line-height:1.12;
+    margin:0 0 10px;color:var(--ink);max-width:94%;
+  }
+  h2.sub-title{
+    font-family:'Fraunces',serif;font-weight:600;font-size:15px;
+    color:var(--sage-dark);margin:10px 0 5px;
+  }
+  p.lede{font-size:11.5px;line-height:1.55;color:var(--ink-soft);max-width:96%;margin:0 0 10px;}
+  p.body-text{font-size:11px;line-height:1.55;color:var(--ink-soft);margin:0 0 8px;}
+  .divider{height:1px;background:var(--line);margin:10px 0;border:none;}
+
+  .content{margin-top:62px;height:calc(100% - 150px);overflow:hidden;padding-bottom:6px;}
+  .content.scrolly{overflow:visible;}
+
+  /* COVER */
+  .cover{display:flex;flex-direction:column;justify-content:space-between;height:100%;}
+  .cover-top{margin-top:40px;}
+  .cover-word{
+    font-family:'Space Mono',monospace;letter-spacing:0.2em;text-transform:uppercase;
+    color:var(--sage-dark);font-size:13px;margin-bottom:18px;
+  }
+  .cover h1{
+    font-family:'Fraunces',serif;font-weight:600;font-size:54px;line-height:1.03;
+    margin:0 0 20px;color:var(--ink);
+  }
+  .cover h1 em{font-style:italic;color:var(--sage-dark);}
+  .cover .sub{font-size:15px;color:var(--ink-soft);max-width:78%;line-height:1.55;margin-bottom:0;}
+  .cover-bottom{display:flex;align-items:flex-end;justify-content:space-between;}
+  .cover-tagline{
+    font-family:'Caveat',cursive;font-size:23px;color:var(--berry);max-width:62%;line-height:1.25;
+  }
+  .cover-badge{
+    width:110px;height:110px;border-radius:50%;border:1.5px solid var(--sage);
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    font-family:'Space Mono',monospace;font-size:9.5px;letter-spacing:0.07em;
+    color:var(--sage-dark);padding:10px;line-height:1.4;
+  }
+
+  /* tables */
+  table.tg{width:100%;border-collapse:collapse;font-size:10.5px;margin-bottom:8px;}
+  table.tg th{
+    text-align:left;font-family:'Space Mono',monospace;font-size:9.5px;text-transform:uppercase;
+    letter-spacing:0.04em;color:var(--sage-dark);border-bottom:2px solid var(--sage);
+    padding:5px 7px;background:var(--sage-pale);
+  }
+  table.tg td{padding:6px 7px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--ink-soft);}
+  table.tg td b, table.tg td.strong{color:var(--ink);font-weight:600;}
+  table.tg tr:last-child td{border-bottom:none;}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .card{
+    background:var(--cream-2);border:1px solid var(--line);border-radius:6px;padding:10px 12px;
+  }
+  .card h3{font-family:'Fraunces',serif;font-size:13px;margin:0 0 5px;color:var(--sage-dark);}
+  .card p{font-size:10.5px;line-height:1.45;margin:0 0 4px;color:var(--ink-soft);}
+  .card ul{margin:4px 0 0;padding-left:15px;}
+  .card ul li{font-size:10px;line-height:1.4;color:var(--ink-soft);margin-bottom:2px;}
+
+  .writeline{
+    border:none;border-bottom:1px solid var(--line);background:transparent;
+    min-height:18px;margin-bottom:6px;padding:1px 2px;font-family:'Caveat',cursive;
+    font-size:16px;color:var(--berry);outline:none;
+  }
+  .writeline.short{min-height:14px;}
+  .writeline:empty:before{content:attr(data-ph);color:#b7b3a4;font-family:'Work Sans',sans-serif;font-size:10.5px;}
+
+  .qblock{margin-bottom:9px;}
+  .qblock .q{font-size:11px;font-weight:600;color:var(--ink);margin-bottom:3px;line-height:1.35;}
+
+  .tag{
+    display:inline-block;font-family:'Space Mono',monospace;font-size:9.5px;
+    background:var(--sage-pale);color:var(--sage-dark);padding:2px 8px;border-radius:20px;
+    letter-spacing:0.03em;
+  }
+
+  .note-box{
+    border:1.5px dashed var(--sage);border-radius:6px;padding:9px 12px;background:var(--sage-pale);
+    font-size:10.5px;color:var(--sage-dark);line-height:1.45;
+  }
+  .myth-box{
+    border-left:3px solid var(--berry);padding:6px 10px;background:var(--cream-2);margin-bottom:6px;
+    font-size:10.5px;line-height:1.4;
+  }
+  .myth-box b{color:var(--berry);}
+
+  ol.tight, ul.tight{margin:4px 0 8px;padding-left:16px;}
+  ol.tight li, ul.tight li{font-size:11px;line-height:1.45;color:var(--ink-soft);margin-bottom:3px;}
+  ol.tight li b, ul.tight li b{color:var(--ink);}
+
+  .habit-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:6px;}
+  .habit-cell{
+    border:1px solid var(--line);border-radius:4px;padding:4px 5px;min-height:38px;background:var(--cream-2);
+  }
+  .habit-cell .day{font-family:'Space Mono',monospace;font-size:8.5px;color:var(--sage-dark);}
+  .habit-check{width:9px;height:9px;border:1.2px solid var(--sage-dark);border-radius:2px;display:inline-block;margin:2px 0;}
+
+  .footer-bar{
+    position:absolute;left:0;right:0;bottom:0;height:34px;
+    background:var(--cream);border-top:1px solid var(--line);
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 44px;z-index:10;
+  }
+  .footer-num{font-family:'Space Mono',monospace;font-size:9.5px;color:var(--ink-soft);letter-spacing:0.05em;}
+  .footer-mark{font-family:'Space Mono',monospace;font-size:9.5px;color:var(--sage-dark);letter-spacing:0.1em;text-transform:uppercase;}
+
+  .idea-list{list-style:none;padding:0;margin:0;}
+  .idea-list li{
+    padding:7px 0;border-bottom:1px solid var(--line);font-size:11.5px;display:flex;gap:8px;
+  }
+  .idea-list li .ic{color:var(--ochre);font-family:'Fraunces',serif;font-style:italic;min-width:16px;}
+
+  .canvas-field{margin-bottom:10px;}
+  .canvas-field .lbl{
+    font-family:'Space Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;
+    color:var(--ochre);margin-bottom:4px;display:block;
+  }
+
+  .weektable td.refl{min-width:120px;}
+  .weektable .yn{width:34px;text-align:center;}
+
+  .page-img{width:100%;height:88px;object-fit:cover;border-radius:6px;margin:2px 0 9px;display:block;}
+
+  .backcover{
+    height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
+    background:var(--sage-dark);margin:-40px -44px -38px;padding:40px 56px;
+  }
+  .backcover h2{font-family:'Fraunces',serif;font-style:italic;color:var(--cream);font-size:26px;line-height:1.3;max-width:82%;font-weight:500;}
+  .backcover .word{font-family:'Space Mono',monospace;color:var(--sage-pale);letter-spacing:0.25em;text-transform:uppercase;font-size:11px;margin-top:22px;}
+
+  @media print{
+    body{background:#fff;}
+    .toolbar{display:none;}
+    .book{max-width:none;margin:0;padding:0;gap:0;}
+    .page{
+      box-shadow:none;border-radius:0;width:210mm;height:297mm;aspect-ratio:auto;
+      page-break-after:always;
+    }
+    .page:last-child{page-break-after:auto;}
+  }
+
+  @media (max-width:720px){
+    .page{aspect-ratio:auto;min-height:auto;padding:26px 18px 30px;}
+    .cover h1{font-size:34px;}
+    .grid-2,.grid-3{grid-template-columns:1fr;}
+    .habit-grid{grid-template-columns:repeat(4,1fr);}
+    .content{margin-top:50px;}
+    table.tg{font-size:10px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <span class="brand">KayXplore</span>
+  <span>from consumer to creator</span>
+  <span style="display:flex;gap:8px;">
+    <button onclick="window.print()">Print / Save as PDF</button>
+    <button onclick="if(confirm('This clears everything you\'ve typed in this booklet on this device. Continue?')){localStorage.removeItem('kayxplore_v1');location.reload();}" style="background:transparent;color:var(--cream);border:1px solid var(--cream);">Clear my answers</button>
+  </span>
+</div>
+<div style="text-align:center;color:#cfd6c8;font-family:'Space Mono',monospace;font-size:10.5px;padding:6px 0 0;background:var(--sage-dark);">Your answers save automatically on this device as you type.</div>
+
+<div class="book" id="book">
+
+  <!-- COVER -->
+  <section class="page">
+    <div class="cover">
+      <div class="cover-top">
+        <div class="cover-word">Project KayXplore</div>
+        <h1>From<br>Consumer <em>to</em><br>Creator</h1>
+        <p class="sub">A practical field guide to Data Science, AI, and building things of your own.</p>
+      </div>
+      <div class="cover-bottom">
+        <div class="cover-tagline">the shift from consumer to<br>creator has to be something<br>you choose on purpose.</div>
+        <div class="cover-badge">KAYXPLORE<br>WORKSHOP<br>EDITION</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 1 — pg 1: intro + table -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 1</span>
+      <h1 class="page-title">The Creator Mindset</h1>
+      <p class="lede">Here's a quiet truth: most of the apps on your phone are built to keep you consuming. Every scroll, swipe, and autoplay is designed to make you spend more time watching, and less time making.</p>
+      <p class="body-text">That's not an accusation — it's just how the economics of the internet work. But it means the shift from consumer to creator has to be something you choose on purpose. Nobody's app is going to nudge you toward it.</p>
+      <h2 class="sub-title">Consumer vs. Creator — the same hour, spent differently</h2>
+      <table class="tg">
+        <tr><th>Consumer</th><th>Creator</th></tr>
+        <tr><td>Watches cooking videos</td><td>Cooks the recipe, changes one thing</td></tr>
+        <tr><td>Scrolls other people's playlists</td><td>Builds a playlist and shares it</td></tr>
+        <tr><td>Asks AI for the answer and copies it</td><td>Asks AI to help think, then decides</td></tr>
+        <tr><td>Reads about how an app works</td><td>Builds a small version of that app</td></tr>
+      </table>
+      <div class="note-box">Notice the creator column isn't about being an expert. It's about doing one extra thing — changing the recipe, sharing the playlist, deciding instead of copying. That's the whole mindset shift. It's small, repeatable, and it starts today.</div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 1 — pg 2: reflect -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 1, cont.</span>
+      <h1 class="page-title">Reflect — Answer Honestly</h1>
+      <p class="lede">No one is grading this.</p>
+      <div class="qblock"><div class="q">Think about the last hour you spent on your phone. Roughly how much of it was consuming, and how much was creating?</div>
+        <div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">When was the last time you made something you were proud of? What was it, and what made it feel good?</div>
+        <div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Name one thing you use every single day that you don't actually understand how it works.</div>
+        <div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">If you could build one thing — an app, a tool, a website — to make your own life a little easier, what would it be?</div>
+        <div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Finish this sentence: "I used to think AI and data were ___, but by the end of this booklet I want to think ___."</div>
+        <div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="note-box">Keep these answers close — you'll come back to them at the very end.</div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 2.1 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 2 — Data Science in Everyday Life</span>
+      <h1 class="page-title">2.1 What Is Data?</h1>
+      <p class="lede">Data is just recorded information about something — a fact, a measurement, an observation you can look back on later. It sounds technical, but you're surrounded by it: your last exam score, the time you woke up, a comment your friend left on your post, the number of steps you walked today. All of that is data.</p>
+      <img class="page-img" src="https://images.unsplash.com/photo-1569693799105-4eb645d89aea?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Laptop screen showing lines of data and code">
+      <p class="body-text">There are two main kinds, and knowing the difference is the first real data science skill:</p>
+      <h2 class="sub-title">Quantitative Data — things you can count or measure</h2>
+      <table class="tg">
+        <tr><th>Example</th><th>The data</th></tr>
+        <tr><td>Hours slept last night</td><td>7.5 hours</td></tr>
+        <tr><td>Goals scored this season</td><td>12</td></tr>
+        <tr><td>Screen time yesterday</td><td>3h 42m</td></tr>
+        <tr><td>Marks scored in a test</td><td>84/100</td></tr>
+      </table>
+      <h2 class="sub-title">Qualitative Data — descriptions, categories, opinions</h2>
+      <table class="tg">
+        <tr><th>Example</th><th>The data</th></tr>
+        <tr><td>How rested you feel</td><td>"tired," "okay," "great"</td></tr>
+        <tr><td>Genre of music you play most</td><td>"Pop," "Lo-fi," "Hip-hop"</td></tr>
+        <tr><td>Teacher's feedback on your essay</td><td>"Well argued, but rushed conclusion"</td></tr>
+        <tr><td>Mood after a match</td><td>"frustrated but proud"</td></tr>
+      </table>
+      <p class="body-text">They almost always work together. A social media post has quantitative data (200 likes, 14 comments) and qualitative data (what the comments actually say). A data scientist looks at both — the number tells you how much, the words tell you why.</p>
+      <div class="qblock"><div class="q">Quick check — look at one thing near you right now. Write one quantitative fact and one qualitative fact about it.</div>
+        <div class="writeline" contenteditable="true" data-ph="Quantitative: ..."></div>
+        <div class="writeline" contenteditable="true" data-ph="Qualitative: ..."></div>
+      </div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 2.2 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 2, cont.</span>
+      <h1 class="page-title">2.2 What Is Data Science, Actually?</h1>
+      <p class="lede">Strip away the jargon and Data Science is this: asking good questions about information, and using what you find to make a better decision.</p>
+      <p class="body-text">That's it. Not equations on a whiteboard — questions and evidence.</p>
+      <h2 class="sub-title">Three things Data Science is NOT</h2>
+      <ol class="tight">
+        <li><b>It is not just coding.</b> Coding is one tool used to do it — the thinking matters more than the tool.</li>
+        <li><b>It is not just for scientists in labs.</b> Sports coaches, YouTubers, shop owners, and app designers all do it daily.</li>
+        <li><b>It is not about big scary numbers.</b> A notebook with seven days of your sleep times is already a dataset.</li>
+      </ol>
+      <div class="note-box">Whenever this booklet says "data science," picture a notebook and a good question — not a whiteboard full of equations.</div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 2.3 pg1 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 2, cont.</span>
+      <h1 class="page-title">2.3 The Data Cycle</h1>
+      <p class="lede">Almost every use of data — from Spotify Wrapped to a cricket captain deciding the batting order — follows the same five-stage cycle.</p>
+      <table class="tg">
+        <tr><th>Stage</th><th>What it means</th><th>Everyday example</th></tr>
+        <tr><td class="strong">1. Collect</td><td>Gathering raw information</td><td>Spotify records every song you play, and for how long.</td></tr>
+        <tr><td class="strong">2. Clean</td><td>Removing errors, duplicates, junk</td><td>Spotify ignores a song you skipped after 2 seconds.</td></tr>
+        <tr><td class="strong">3. Analyze</td><td>Looking for patterns</td><td>Spotify notices you play sad songs at night, upbeat in the morning.</td></tr>
+        <tr><td class="strong">4. Visualize</td><td>Turning patterns into pictures</td><td>Your Spotify Wrapped — bar charts, top artists, minutes listened.</td></tr>
+        <tr><td class="strong">5. Decide</td><td>Using the pattern to act</td><td>Spotify decides which new song to recommend you next.</td></tr>
+      </table>
+      <h2 class="sub-title">More examples of the same cycle</h2>
+      <ul class="tight">
+        <li><b>A cricket captain:</b> collects each bowler's past overs → cleans out a rained-off match → analyzes who concedes fewer runs at the death → visualizes it as a stats sheet → decides the bowling order.</li>
+        <li><b>Your school:</b> collects attendance daily → cleans out days school was shut → analyzes which weeks had the most absences → visualizes it in a report → decides whether to change the timetable.</li>
+        <li><b>A food delivery app:</b> collects delivery times across the city → cleans out unusual-weather days → analyzes the slowest areas → visualizes it on a map → decides where to add riders.</li>
+      </ul>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 2.3 pg2 reflect -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 2, cont.</span>
+      <h1 class="page-title">Reflect — Run the Cycle Yourself</h1>
+      <p class="lede">Pick ONE thing from your day today — a game score, a step count, how long you studied, likes on a post. Walk it through all five stages.</p>
+      <div class="qblock"><div class="q">Collect — what raw information exists here?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Clean — is any of it junk or a mistake that shouldn't count?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Analyze — what pattern do you notice?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Visualize — how could you draw or show this pattern simply?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Decide — what would you do differently now that you've seen the pattern?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 3 pg1 areas A-D -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 3</span>
+      <h1 class="page-title">Become a Data Scientist of Your Own Life</h1>
+      <p class="lede">For the next 7 days, pick ONE area below and track it honestly. At the end of the week, look for a pattern and decide on one small change — the same project professionals run, just pointed at you.</p>
+      <div class="grid-2">
+        <div class="card"><h3>Area A — Sleep</h3><p><b>Track:</b> bed/wake times daily.</p><ul><li>What's my average hours this week?</li><li>Any day very different — why?</li><li>Does more sleep change my next day?</li></ul></div>
+        <div class="card"><h3>Area B — Screen Time</h3><p><b>Track:</b> total time + top app, daily.</p><ul><li>Which app quietly eats the most time?</li><li>Higher on school days or weekends?</li><li>How much was consuming vs. creating?</li></ul></div>
+        <div class="card"><h3>Area C — Mood</h3><p><b>Track:</b> 1&ndash;5 rating, morning & night.</p><ul><li>Any day consistently lower/higher?</li><li>What shows up on my best days?</li><li>What shows up on my worst days?</li></ul></div>
+        <div class="card"><h3>Area D — Study Habits</h3><p><b>Track:</b> focused minutes + subject.</p><ul><li>Which subject gets the least focus?</li><li>What time of day do I focus best?</li><li>Do I study more before a test?</li></ul></div>
+      </div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 3 pg2 areas E-G -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 3, cont.</span>
+      <h1 class="page-title">Choose Your Area, cont.</h1>
+      <div class="grid-2">
+        <div class="card"><h3>Area E — Money / Spending</h3><p><b>Track:</b> every rupee spent + on what.</p><ul><li>What category takes the biggest share?</li><li>Any purchase I regretted, looking back?</li><li>What if I skipped my smallest habit-buy?</li></ul></div>
+        <div class="card"><h3>Area F — Physical Activity</h3><p><b>Track:</b> minutes of movement, daily.</p><ul><li>Which day had the most movement, why?</li><li>Any day with almost none — what happened?</li><li>Does movement change my mood/sleep?</li></ul></div>
+        <div class="card" style="border-style:dashed;"><h3>Area G — Choose Your Own</h3>
+          <div class="writeline" contenteditable="true" data-ph="what will you track?"></div>
+          <div class="writeline" contenteditable="true" data-ph="how will you track it?"></div>
+          <div class="writeline" contenteditable="true" data-ph="what will you ask your data?"></div>
+        </div>
+      </div>
+      <div class="note-box" style="margin-top:8px;">Area chosen: <span class="writeline" contenteditable="true" data-ph="write your chosen area here" style="display:inline-block;width:60%;"></span></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 3 pg3 tracker + analysis -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 3, cont.</span>
+      <h1 class="page-title">Your 7-Day Tracker</h1>
+      <table class="tg">
+        <tr><th>Day</th><th>What I recorded</th><th>Quick note</th></tr>
+        <tr><td>Day 1</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>Day 2</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>Day 3</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>Day 4</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>Day 5</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>Day 6</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>Day 7</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+      <h2 class="sub-title">Analyze, Visualize, Decide</h2>
+      <div class="qblock"><div class="q">What pattern surprised you most?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Sketch this data as one simple chart (bar chart, line, smiley faces — anything):</div>
+        <div style="border:1px dashed var(--line);border-radius:6px;min-height:70px;margin-top:4px;"></div></div>
+      <div class="qblock"><div class="q">Based on the pattern, what is ONE small change you will try next week?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 4.1 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 4 — Make AI Your Thinking Partner</span>
+      <h1 class="page-title">4.1 What Is AI, Really?</h1>
+      <p class="lede">AI is a broad term for computer systems that can do things which normally need human intelligence — recognizing a face, translating a language, recommending a song, or holding a conversation. Tools like ChatGPT and Claude are a specific kind called Large Language Models (LLMs).</p>
+      <img class="page-img" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Laptop displaying programming code on screen">
+      <p class="body-text"><b>What's an algorithm?</b> A set of step-by-step instructions a computer follows to turn an input into an output — like a recipe, but for a computer. E.g: <i>if homework is due tomorrow → do it first. Else → do the reading. Then → check messages.</i> That's an algorithm: a clear rule, followed in order, every time.</p>
+      <p class="body-text">An AI chatbot has been trained on an enormous amount of text, and learned the patterns of how humans use language. When you ask it something, it isn't "looking up" an answer — it's predicting the most likely, most useful next words, one piece at a time. It doesn't have memories, feelings, or "know" things the way you know your own address. It's closer to an extremely well-read pattern-matcher than a digital person.</p>
+      <h2 class="sub-title">Common misconceptions, cleared up</h2>
+      <div class="myth-box"><b>"AI knows everything."</b> — It only knows patterns from its training data, which has a cut-off date. It can be out of date or wrong.</div>
+      <div class="myth-box"><b>"AI is always right."</b> — It can sound confident while being completely wrong. This is common enough to have a name: a "hallucination."</div>
+      <div class="myth-box"><b>"AI has opinions and feelings."</b> — It generates text that sounds like opinions because that's a pattern in human writing — it isn't experiencing anything.</div>
+      <div class="myth-box"><b>"Using AI means I stop thinking."</b> — Only if you let it. Used well, AI does the first draft — you still steer, question, and decide.</div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 4.2 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 4, cont.</span>
+      <h1 class="page-title">4.2 Clarity of Prompts</h1>
+      <p class="lede">A "prompt" is just the instruction you give the AI. Vague prompts get vague, generic answers. Specific prompts get useful ones.</p>
+      <ol class="tight">
+        <li><b>Give context</b> — who you are, what you're trying to do, and why.</li>
+        <li><b>Be specific about the outcome</b> — length, tone, format, level of detail.</li>
+        <li><b>Iterate</b> — treat the first answer as a rough draft, not the final one.</li>
+        <li><b>Ask it to ask you</b> — for complex tasks, tell the AI to ask clarifying questions first.</li>
+      </ol>
+      <table class="tg">
+        <tr><th>Weak</th><th>Strong</th></tr>
+        <tr><td>"Explain photosynthesis."</td><td>"I'm 14 and revising for a Grade 9 biology test tomorrow. Explain photosynthesis in under 150 words, using one everyday analogy, and end with 3 quiz questions to test me."</td></tr>
+        <tr><td>"Make me a study plan."</td><td>"I have 5 days before my Maths exam and I'm weakest at algebra. Build me a day-by-day study plan, 45 minutes a day, with one practice question per day."</td></tr>
+      </table>
+      <div class="qblock"><div class="q">Your turn — fix this vague prompt: <i>"Tell me about space."</i></div>
+        <div class="writeline" contenteditable="true" data-ph="write your improved prompt..."></div>
+        <div class="writeline" contenteditable="true" data-ph=""></div>
+      </div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 4.3 pg1 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 4, cont.</span>
+      <h1 class="page-title">4.3 AI Safety &amp; Ethics — Use It With Precaution</h1>
+      <p class="lede">AI is a tool, not a substitute for your own judgment, skills, or effort. The goal is to think faster with it — not to think less.</p>
+      <h2 class="sub-title">Signs you might be over-relying on it</h2>
+      <ul class="tight">
+        <li>You can't complete a similar task without opening an AI tool first.</li>
+        <li>You don't actually understand the work you submitted with your own name on it.</li>
+        <li>You feel anxious or "lost" the moment you can't check with AI.</li>
+      </ul>
+      <p class="body-text">If any of those feel familiar, that's a signal to dial back — try the task yourself first, then use AI to check or improve it, not to produce it from scratch.</p>
+      <h2 class="sub-title">Practical safety habits to build now</h2>
+      <ul class="tight">
+        <li>Fact-check anything important against a second, independent source.</li>
+        <li>Never share your full name, address, school ID, or family details in a chat.</li>
+        <li>Before uploading anything, ask: "Would I be okay if this became public?" If no, don't upload it.</li>
+        <li>Log out of AI accounts on shared or public devices.</li>
+        <li>Remember: AI gathers options and drafts ideas — the decision stays with you.</li>
+      </ul>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 4.3 pg2 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 4, cont.</span>
+      <h1 class="page-title">Things You Should NOT Use AI For</h1>
+      <div class="card" style="margin-bottom:8px;"><h3>1. Anything that has to be authentically yours</h3><p>Personal essays about your own life, creative writing being graded for your voice, exam answers meant to show your understanding. Use AI to prepare and practice — not to produce the final piece someone else will grade as "your work."</p></div>
+      <div class="card" style="margin-bottom:8px;"><h3>2. Confidential or sensitive information</h3><p>Never upload: ID cards or passports, medical records, financial or bank statements, family legal documents, school's internal papers, exam papers, or passwords. Once typed into an AI chat, treat it as no longer private.</p></div>
+      <div class="card" style="margin-bottom:8px;"><h3>3. Photos of real people — yours or anyone else's</h3><p>Don't upload personal photos to be edited, analyzed, or generated into something new, without clear consent. Be extra cautious around anything that manipulates a real photo or video — this is how misleading "deepfakes" get made.</p></div>
+      <div class="card" style="margin-bottom:8px;"><h3>4. High-stakes, real-life decisions</h3><p>Medical symptoms, legal trouble, safety concerns — AI can help you understand options, but the final call belongs to a real trusted adult or professional.</p></div>
+      <div class="card"><h3>5. Anything designed to deceive</h3><p>Don't use AI to impersonate someone, fake authorship of a document, or produce convincing misinformation — even "as a joke."</p></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 5 pg1 Claude -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 5 — Your AI Toolkit</span>
+      <h1 class="page-title">1. Claude — Your Build-It Partner</h1>
+      <p class="lede"><b>Best for:</b> turning an idea into something real — writing, planning, and especially vibe coding your own project from scratch.</p>
+      <img class="page-img" src="https://images.unsplash.com/photo-1603575448360-153f093fd0b2?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Person typing on a laptop, building something new">
+      <p class="body-text">Claude holds a long, careful conversation with you — exactly what you need when building rather than asking a quick one-off question. <b>Vibe coding</b> means describing what you want in plain, everyday English and having it write the actual working code, refining it together until it feels right. You don't need to know how to code to start — just describe clearly what you want (see Section 4.2).</p>
+      <ul class="tight">
+        <li>Writes full, working code for websites, games, and apps from a plain-language description.</li>
+        <li>Holds long, detailed conversations without losing track of your project.</li>
+        <li>Explains what it built so you actually learn as you go.</li>
+        <li>Drafts and polishes long pieces of writing — even a booklet like this one.</li>
+        <li>Asks clarifying questions before diving in, so you spend less time correcting wrong turns.</li>
+      </ul>
+      <div class="note-box">
+        <b>Try vibe coding right now — copy one of these into Claude:</b><br><br>
+        <i>"I want to vibe code a simple browser game called [name]. It should be [describe it]. Here's how you win or lose: [describe the rule]. Keep visuals simple and colourful. Build it as a single HTML file. Explain each part briefly, and ask me questions first if anything is unclear."</i><br><br>
+        <i>"I want to vibe code a one-page personal website about me. Include: my name and a short intro, 3 things I'm interested in, one project I'm proud of, and a way to contact me. Use a clean design with colour theme [pick colours]. Build it as a single HTML file. Ask me clarifying questions first."</i><br><br>
+        The first version is never final — tell it exactly what to change, and it will rebuild with you, as many times as it takes. <b>See mine for inspiration:</b> k4nika1111.github.io/kayplanner
+      </div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 5 pg2 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 5, cont.</span>
+      <h1 class="page-title">More Tools Worth Knowing</h1>
+      <div class="card" style="margin-bottom:8px;"><h3>2. ChatGPT — The All-Purpose AI Assistant</h3><p><b>Best for:</b> explaining complex topics, drafting text, and debugging code.</p><ul><li>Explains complex concepts in simple terms.</li><li>Helps draft essays, emails, and reports.</li><li>Solves math, coding, and reasoning problems.</li><li>Summarizes long research papers or articles.</li><li>Generates study notes and presentation outlines.</li></ul><p>Like having a knowledgeable, 24/7 tutor available to answer your questions.</p></div>
+      <div class="card" style="margin-bottom:8px;"><h3>3. Perplexity AI — The Citable Research Engine</h3><p><b>Best for:</b> research papers, fact-checking, finding credible sources.</p><ul><li>Provides concise answers with direct citations.</li><li>Ideal for finding credible sources for an assignment.</li><li>Helps you write factual, well-supported academic content.</li></ul></div>
+      <div class="card"><h3>4. NotebookLM — Your Document-Only Study Partner</h3><p><b>Best for:</b> turning your own notes or textbook into summaries and quizzes, using ONLY the material you give it.</p><ul><li>Summarizes long readings into key points.</li><li>Generates quiz questions based only on your uploaded material.</li><li>Points to exactly where in your notes an answer came from.</li></ul></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 5 pg3 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 5, cont.</span>
+      <h1 class="page-title">More Tools Worth Knowing</h1>
+      <div class="card" style="margin-bottom:8px;"><h3>5. TurboLearn AI — Lecture-to-Notes, Instantly</h3><p><b>Best for:</b> turning a recorded lecture, YouTube video, or PDF into notes you can revise from.</p><ul><li>Converts a lecture or class recording into structured notes.</li><li>Turns a PDF chapter into flashcards automatically.</li><li>Creates a short podcast-style audio summary.</li><li>Re-explains a confusing part in simpler words.</li><li>Generates an instant quiz to test what you retained.</li></ul></div>
+      <div class="card" style="margin-bottom:8px;"><h3>6. Canva — Design Without the Learning Curve</h3><p><b>Best for:</b> making anything look professional fast — posters, presentations, social posts.</p><ul><li>Generates a full poster or presentation layout from one sentence.</li><li>Suggests colour palettes and fonts that actually match.</li><li>Removes photo backgrounds and resizes designs instantly.</li></ul></div>
+      <div class="card"><h3>7. Gamma — Idea-to-Slide-Deck in Minutes</h3><p><b>Best for:</b> turning an outline or idea into a full slide deck or simple webpage, fast.</p><ul><li>Converts an outline into a complete slide deck.</li><li>Builds simple one-page websites from a text description.</li><li>Automatically picks layouts, images, and formatting.</li></ul></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 5 pg4 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 5, cont.</span>
+      <h1 class="page-title">Rounding Out the Toolkit</h1>
+      <div class="card" style="margin-bottom:8px;"><h3>8. Grammarly — The Professional Writing Editor</h3><p><b>Best for:</b> enhancing essays, emails, and professional documents.</p><ul><li>Fixes grammar, spelling, and punctuation errors.</li><li>Improves tone, clarity, and sentence structure.</li><li>Suggests stronger vocabulary and rewrites awkward sentences.</li></ul></div>
+      <div class="card" style="margin-bottom:8px;"><h3>9. Notion AI — The Ultimate Organization Hub</h3><p><b>Best for:</b> organizing notes, managing projects, personal wikis.</p><ul><li>Instantly summarizes lengthy class notes.</li><li>Creates tables, to-do lists, and action items automatically.</li><li>Assists in project planning and scheduling.</li></ul></div>
+      <div class="card"><h3>10. Quizlet — Interactive Exam Preparation</h3><p><b>Best for:</b> memorizing key concepts, vocabulary, and formulas.</p><ul><li>Generates interactive flashcards and practice quizzes from your notes.</li><li>Identifies concepts you struggle with.</li><li>Helps memorize formulas, key dates, and terminology.</li></ul></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 6 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 6</span>
+      <h1 class="page-title">Build Something for Yourself</h1>
+      <p class="lede">This is the point of everything so far. Time to make something — even something small and rough. A first version that works is more valuable than a perfect idea that stays in your head.</p>
+      <img class="page-img" src="https://images.unsplash.com/photo-1559842135-8d5e4214ae77?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="An open laptop, ready for a new project">
+      <ul class="idea-list">
+        <li><span class="ic">i.</span> A study buddy chatbot with a personality you design, that quizzes you on one subject.</li>
+        <li><span class="ic">ii.</span> A simple one-page personal website — who you are, what you're into, one project you're proud of.</li>
+        <li><span class="ic">iii.</span> A habit or mood tracker, like the one you sketched in Section 3, but as a real interactive tool.</li>
+        <li><span class="ic">iv.</span> A quiz game for a subject you're revising, where AI generates new questions each time.</li>
+        <li><span class="ic">v.</span> A "Wrapped"-style summary of your own school term — grades, activities, highlights.</li>
+        <li><span class="ic">vi.</span> A simple planner or checklist tool, like Kay Planner, built around your own routine.</li>
+        <li><span class="ic">vii.</span> A card or trivia game that tests friends on a topic you both care about.</li>
+      </ul>
+      <div class="qblock" style="margin-top:8px;"><div class="q">What's a small problem in my daily life that annoys me?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Who else might have this same problem?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">What would the simplest possible version of a fix look like?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">My idea:</div><div class="writeline" contenteditable="true" data-ph="write here..."></div><div class="writeline" contenteditable="true" data-ph=""></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 7 pg1 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 7</span>
+      <h1 class="page-title">Project Canvas</h1>
+      <p class="lede">One page to plan before you build. Fill this in fully before you open any AI tool — a clear plan makes your prompts sharper and your project faster to build.</p>
+      <div class="canvas-field"><span class="lbl">Project name</span><div class="writeline" contenteditable="true" data-ph="..."></div></div>
+      <div class="canvas-field"><span class="lbl">The problem I'm solving</span><div class="writeline" contenteditable="true" data-ph="..."></div></div>
+      <div class="canvas-field"><span class="lbl">Who it's for</span><div class="writeline" contenteditable="true" data-ph="just me? friends? classmates?"></div></div>
+      <div class="canvas-field"><span class="lbl">Success looks like...</span><div class="writeline" contenteditable="true" data-ph="one sentence..."></div></div>
+      <div class="canvas-field"><span class="lbl">Must-have features</span>
+        <div class="writeline" contenteditable="true" data-ph=""></div><div class="writeline" contenteditable="true" data-ph=""></div></div>
+      <div class="canvas-field"><span class="lbl">Nice-to-have features</span>
+        <div class="writeline" contenteditable="true" data-ph=""></div></div>
+      <div class="canvas-field"><span class="lbl">Not doing this time</span><div class="writeline" contenteditable="true" data-ph="what are you deliberately leaving out?"></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 7 pg2 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 7, cont.</span>
+      <h1 class="page-title">Project Canvas, cont.</h1>
+      <div class="canvas-field"><span class="lbl">Design & feel (2-3 words for the vibe)</span><div class="writeline" contenteditable="true" data-ph="..."></div></div>
+      <div class="canvas-field"><span class="lbl">Tools I'll use (from Section 5)</span><div class="writeline" contenteditable="true" data-ph="..."></div></div>
+      <div class="canvas-field"><span class="lbl">My prompt draft (write it here before pasting into Claude)</span>
+        <div class="writeline" contenteditable="true" data-ph=""></div><div class="writeline" contenteditable="true" data-ph=""></div><div class="writeline" contenteditable="true" data-ph=""></div></div>
+      <div class="grid-2">
+        <div class="canvas-field"><span class="lbl">This week</span><div class="writeline" contenteditable="true" data-ph=""></div></div>
+        <div class="canvas-field"><span class="lbl">Next week</span><div class="writeline" contenteditable="true" data-ph=""></div></div>
+        <div class="canvas-field"><span class="lbl">Testing week</span><div class="writeline" contenteditable="true" data-ph=""></div></div>
+        <div class="canvas-field"><span class="lbl">Who will test it for me</span><div class="writeline" contenteditable="true" data-ph=""></div></div>
+      </div>
+      <div class="canvas-field"><span class="lbl">One thing I learned building this (fill in after)</span><div class="writeline" contenteditable="true" data-ph=""></div></div>
+      <div class="note-box">When it's built, send the link here so it can be shared and celebrated: <b>kanikaj2409@gmail.com</b> — include one sentence about what it does, and one about the hardest part of building it.</div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 8 intro + week1 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 8 — The 30-Day Challenge</span>
+      <h1 class="page-title">Week 1 — Explore (Days 1&ndash;7)</h1>
+      <p class="lede">Building the mindset from Section 1 takes repetition, not a single afternoon. The only rules: pick one small action each day · if you miss a day, restart the next — don't quit · the one-line reflection matters more than the checkbox.</p>
+      <div class="canvas-field"><span class="lbl">My chosen habit for the challenge</span><div class="writeline" contenteditable="true" data-ph="..."></div></div>
+      <p class="body-text"><b>Focus:</b> get comfortable with your tools and notice your own patterns. Ideas: try one new AI prompt each day · re-read a section of this booklet · track your Section 3 data point.</p>
+      <table class="tg weektable">
+        <tr><th>Day</th><th class="yn">Y/N</th><th class="refl">One-line reflection</th></tr>
+        <tr><td>1</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>2</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>3</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>4</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>5</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>6</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>7</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+      <div class="qblock"><div class="q">Week 1 check-in: what's one pattern you noticed this week?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 8 week2 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 8, cont.</span>
+      <h1 class="page-title">Week 2 — Build (Days 8&ndash;14)</h1>
+      <p class="lede"><b>Focus:</b> make daily progress on your Section 6/7 project. Ideas: write your project canvas · draft your vibe-coding prompt · build the first working version.</p>
+      <table class="tg weektable">
+        <tr><th>Day</th><th class="yn">Y/N</th><th class="refl">One-line reflection</th></tr>
+        <tr><td>8</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>9</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>10</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>11</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>12</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>13</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>14</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+      <div class="qblock"><div class="q">Week 2 check-in: what's the biggest thing you built or fixed this week?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 8 week3 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 8, cont.</span>
+      <h1 class="page-title">Week 3 — Refine (Days 15&ndash;21)</h1>
+      <p class="lede"><b>Focus:</b> test, get feedback, and make it better. Ideas: show your project to your tester · fix one thing that annoyed you · add one small improvement a day.</p>
+      <table class="tg weektable">
+        <tr><th>Day</th><th class="yn">Y/N</th><th class="refl">One-line reflection</th></tr>
+        <tr><td>15</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>16</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>17</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>18</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>19</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>20</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>21</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+      <div class="qblock"><div class="q">Week 3 check-in: what feedback surprised you the most?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 8 week4 + celebration -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 8, cont.</span>
+      <h1 class="page-title">Week 4 — Reflect &amp; Share (Days 22&ndash;30)</h1>
+      <p class="lede"><b>Focus:</b> finish strong, write your reflection, and send it in. Ideas: polish the last rough edges · write your Section 7 wrap-up · send your project link.</p>
+      <table class="tg weektable">
+        <tr><th>Day</th><th class="yn">Y/N</th><th class="refl">One-line reflection</th></tr>
+        <tr><td>22</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>23</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>24</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>25</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>26</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>27</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>28</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>29</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><td>30</td><td class="yn">&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+      <h2 class="sub-title">Day 30 — Celebration reflection</h2>
+      <div class="qblock"><div class="q">What are you most proud of from this whole month?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">What was harder than you expected — and how did you handle it?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- FULL CIRCLE -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Full Circle</span>
+      <h1 class="page-title">Back to the Beginning</h1>
+      <p class="lede">Go back to Section 1 and re-read what you wrote in the reflection questions on day one. Now answer these.</p>
+      <div class="qblock"><div class="q">What's one thing you'll keep doing, even after the challenge ends?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">How would you answer question 1 (consumer vs. creator) differently today?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">What's one thing you understand about AI or Data Science now that you didn't before?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Are you curious about exploring this further — as a hobby, a subject, or maybe even a career? Why or why not?</div>
+        <div class="writeline" contenteditable="true" data-ph="write here..."></div><div class="writeline" contenteditable="true" data-ph=""></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- BACK COVER -->
+  <section class="page">
+    <div class="backcover">
+      <h2>"Data helps us understand the world. AI helps us use it. You're the one who decides what to build."</h2>
+      <div class="word">Project KayXplore</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+  const pages = document.querySelectorAll('.page[data-content]');
+  const total = pages.length;
+  pages.forEach((p,i)=>{
+    const n = i+1;
+    const mount = p.querySelector('.sprig-mount');
+    if(mount){
+      let leaves='';
+      const leafCount = Math.min(n,9);
+      for(let k=0;k<leafCount;k++){
+        const side = k%2===0?1:-1;
+        const yPos = 34 - k*3.2;
+        leaves += '<path d="M20 '+yPos+' Q'+(20+side*9)+' '+(yPos-4)+' '+(20+side*15)+' '+(yPos-9)+'" stroke="#8FA080" stroke-width="2" fill="none"/>';
+      }
+      mount.innerHTML = '<svg viewBox="0 0 40 40"><path d="M20 38 L20 4" stroke="#8FA080" stroke-width="2" fill="none"/>'+leaves+'</svg><span class="n">'+String(n).padStart(2,'0')+' / '+String(total).padStart(2,'0')+'</span>';
+    }
+    const fnum = p.querySelector('.footer-num');
+    if(fnum) fnum.textContent = String(n).padStart(2,'0');
+  });
+
+  // Autosave / restore each child's answers on this device
+  const STORE_KEY = 'kayxplore_v1';
+  let saved = {};
+  try{ saved = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); }catch(e){ saved = {}; }
+  const fields = document.querySelectorAll('.writeline[contenteditable="true"]');
+  fields.forEach((el,i)=>{
+    const key = 'f'+i;
+    if(saved[key]){ el.innerText = saved[key]; }
+    el.addEventListener('input', function(){
+      saved[key] = el.innerText;
+      try{ localStorage.setItem(STORE_KEY, JSON.stringify(saved)); }catch(e){}
+    });
+  });
+});
+</script>
+
+</body>
+</html>

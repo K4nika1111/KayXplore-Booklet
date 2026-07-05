@@ -45,11 +45,12 @@
   .page{
     background:var(--cream);
     width:100%;
-    min-height:1040px;
+    aspect-ratio:210/297;
     position:relative;
-    padding:40px 44px 74px;
+    padding:40px 44px 38px;
     box-shadow:0 18px 40px rgba(0,0,0,0.35);
     border-radius:2px;
+    overflow:hidden;
   }
 
   .sprig-mount{position:absolute;top:28px;right:34px;display:flex;align-items:center;gap:8px;}
@@ -78,12 +79,10 @@
   p.body-text{font-size:11px;line-height:1.55;color:var(--ink-soft);margin:0 0 8px;}
   .divider{height:1px;background:var(--line);margin:10px 0;border:none;}
 
-  .content{margin-top:62px;}
+  .content{margin-top:62px;height:calc(100% - 150px);overflow:hidden;padding-bottom:6px;}
   .content.scrolly{overflow:visible;}
 
   /* COVER */
-  .page.fixed-height{height:1040px;min-height:1040px;}
-
   .cover{display:flex;flex-direction:column;justify-content:space-between;height:100%;}
   .cover-top{margin-top:40px;}
   .cover-word{
@@ -212,7 +211,7 @@
 
   .backcover{
     height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
-    background:var(--sage-dark);margin:-40px -44px -74px;padding:40px 56px;
+    background:var(--sage-dark);margin:-40px -44px -38px;padding:40px 56px;
   }
   .backcover h2{font-family:'Fraunces',serif;font-style:italic;color:var(--cream);font-size:26px;line-height:1.3;max-width:82%;font-weight:500;}
   .backcover .word{font-family:'Space Mono',monospace;color:var(--sage-pale);letter-spacing:0.25em;text-transform:uppercase;font-size:11px;margin-top:22px;}
@@ -222,20 +221,18 @@
     .toolbar, .save-note{display:none;}
     .book{max-width:none;margin:0;padding:0;gap:0;}
     .page{
-      box-shadow:none;border-radius:0;width:210mm;min-height:297mm;height:auto;
+      box-shadow:none;border-radius:0;width:210mm;height:297mm;aspect-ratio:auto;
       page-break-after:always;
     }
-    .page.fixed-height{height:297mm;}
     .page:last-child{page-break-after:auto;}
   }
 
   @media (max-width:720px){
-    .page{padding:26px 18px 64px;min-height:520px;}
-    .page.fixed-height{height:auto;min-height:640px;}
+    .page{aspect-ratio:auto;min-height:auto;padding:26px 18px 30px;}
+    .content{height:auto;overflow:visible;margin-top:50px;}
     .cover h1{font-size:34px;}
     .grid-2,.grid-3{grid-template-columns:1fr;}
     .habit-grid{grid-template-columns:repeat(4,1fr);}
-    .content{margin-top:50px;}
     table.tg{font-size:10px;}
   }
 </style>
@@ -255,7 +252,7 @@
 <div class="book" id="book">
 
   <!-- COVER -->
-  <section class="page fixed-height">
+  <section class="page">
     <div class="cover">
       <div class="cover-top">
         <div class="cover-word">Project KayXplore</div>
@@ -329,7 +326,17 @@
         <tr><td>Screen time yesterday</td><td>3h 42m</td></tr>
         <tr><td>Marks scored in a test</td><td>84/100</td></tr>
       </table>
-      <h2 class="sub-title">Qualitative Data - descriptions, categories, opinions</h2>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 2.1 pg2 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 2, cont.</span>
+      <h1 class="page-title">Qualitative Data</h1>
+      <p class="lede">The other kind - descriptions, categories, and opinions, not numbers.</p>
       <table class="tg">
         <tr><th>Example</th><th>The data</th></tr>
         <tr><td>How rested you feel</td><td>"tired," "okay," "great"</td></tr>
@@ -384,7 +391,6 @@
       <ul class="tight">
         <li><b>A cricket captain:</b> collects each bowler's past overs → cleans out a rained-off match → analyzes who concedes fewer runs at the death → visualizes it as a stats sheet → decides the bowling order.</li>
         <li><b>Your school:</b> collects attendance daily → cleans out days school was shut → analyzes which weeks had the most absences → visualizes it in a report → decides whether to change the timetable.</li>
-        <li><b>A food delivery app:</b> collects delivery times across the city → cleans out unusual-weather days → analyzes the slowest areas → visualizes it on a map → decides where to add riders.</li>
       </ul>
     </div>
     <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
@@ -475,7 +481,18 @@
       <p class="lede">AI is a broad term for computer systems that can do things which normally need human intelligence - recognizing a face, translating a language, recommending a song, or holding a conversation. Tools like ChatGPT and Claude are a specific kind called Large Language Models (LLMs).</p>
       <img class="page-img" src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Laptop displaying programming code on screen">
       <p class="body-text"><b>What's an algorithm?</b> A set of step-by-step instructions a computer follows to turn an input into an output - like a recipe, but for a computer. E.g: <i>if homework is due tomorrow → do it first. Else → do the reading. Then → check messages.</i> That's an algorithm: a clear rule, followed in order, every time.</p>
-      <p class="body-text">An AI chatbot has been trained on an enormous amount of text, and learned the patterns of how humans use language. When you ask it something, it isn't "looking up" an answer - it's predicting the most likely, most useful next words, one piece at a time. It doesn't have memories, feelings, or "know" things the way you know your own address. It's closer to an extremely well-read pattern-matcher than a digital person.</p>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 4.1 pg2 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 4, cont.</span>
+      <h1 class="page-title">How AI Chatbots Actually Work</h1>
+      <p class="lede">An AI chatbot has been trained on an enormous amount of text, and learned the patterns of how humans use language. When you ask it something, it isn't "looking up" an answer - it's predicting the most likely, most useful next words, one piece at a time.</p>
+      <p class="body-text">It doesn't have memories, feelings, or "know" things the way you know your own address. It's closer to an extremely well-read pattern-matcher than a digital person.</p>
       <h2 class="sub-title">Common misconceptions, cleared up</h2>
       <div class="myth-box"><b>"AI knows everything."</b> - It only knows patterns from its training data, which has a cut-off date. It can be out of date or wrong.</div>
       <div class="myth-box"><b>"AI is always right."</b> - It can sound confident while being completely wrong. This is common enough to have a name: a "hallucination."</div>
@@ -545,7 +562,17 @@
       <h1 class="page-title">Things You Should NOT Use AI For</h1>
       <div class="card" style="margin-bottom:8px;"><h3>1. Anything that has to be authentically yours</h3><p>Personal essays about your own life, creative writing being graded for your voice, exam answers meant to show your understanding. Use AI to prepare and practice - not to produce the final piece someone else will grade as "your work."</p></div>
       <div class="card" style="margin-bottom:8px;"><h3>2. Confidential or sensitive information</h3><p>Never upload: ID cards or passports, medical records, financial or bank statements, family legal documents, school's internal papers, exam papers, or passwords. Once typed into an AI chat, treat it as no longer private.</p></div>
-      <div class="card" style="margin-bottom:8px;"><h3>3. Photos of real people: yours or anyone else's</h3><p>Don't upload personal photos to be edited, analyzed, or generated into something new, without clear consent. Be extra cautious around anything that manipulates a real photo or video - this is how misleading "deepfakes" get made.</p></div>
+      <div class="card"><h3>3. Photos of real people: yours or anyone else's</h3><p>Don't upload personal photos to be edited, analyzed, or generated into something new, without clear consent. Be extra cautious around anything that manipulates a real photo or video - this is how misleading "deepfakes" get made.</p></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 4.3 pg3 -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 4, cont.</span>
+      <h1 class="page-title">A Couple More to Watch For</h1>
       <div class="card" style="margin-bottom:8px;"><h3>4. High-stakes, real-life decisions</h3><p>Medical symptoms, legal trouble, safety concerns - AI can help you understand options, but the final call belongs to a real trusted adult or professional.</p></div>
       <div class="card"><h3>5. Anything designed to deceive</h3><p>Don't use AI to impersonate someone, fake authorship of a document, or produce convincing misinformation - even "as a joke."</p></div>
     </div>
@@ -568,12 +595,25 @@
         <li>Drafts and polishes long pieces of writing - even a booklet like this one.</li>
         <li>Asks clarifying questions before diving in, so you spend less time correcting wrong turns.</li>
       </ul>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 5 pg1b: vibe coding prompts -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 5, cont.</span>
+      <h1 class="page-title">Try Vibe Coding Right Now</h1>
+      <p class="lede">Copy one of these straight into Claude and see what happens.</p>
       <div class="note-box">
-        <b>Try vibe coding right now - copy one of these into Claude:</b><br><br>
-        <i>"I want to vibe code a simple browser game called [name]. It should be [describe it]. Here's how you win or lose: [describe the rule]. Keep visuals simple and colourful. Build it as a single HTML file. Explain each part briefly, and ask me questions first if anything is unclear."</i><br><br>
-        <i>"I want to vibe code a one-page personal website about me. Include: my name and a short intro, 3 things I'm interested in, one project I'm proud of, and a way to contact me. Use a clean design with colour theme [pick colours]. Build it as a single HTML file. Ask me clarifying questions first."</i><br><br>
-        The first version is never final - tell it exactly what to change, and it will rebuild with you, as many times as it takes. <b>See mine for inspiration:</b> <a class="inline-link" href="https://k4nika1111.github.io/kayplanner/" target="_blank" rel="noopener">k4nika1111.github.io/kayplanner</a>
+        <i>"I want to vibe code a simple browser game called [name]. It should be [describe it]. Here's how you win or lose: [describe the rule]. Keep visuals simple and colourful. Build it as a single HTML file. Explain each part briefly, and ask me questions first if anything is unclear."</i>
       </div>
+      <div class="note-box" style="margin-top:10px;">
+        <i>"I want to vibe code a one-page personal website about me. Include: my name and a short intro, 3 things I'm interested in, one project I'm proud of, and a way to contact me. Use a clean design with colour theme [pick colours]. Build it as a single HTML file. Ask me clarifying questions first."</i>
+      </div>
+      <p class="body-text" style="margin-top:12px;">The first version is never final - tell it exactly what to change, and it will rebuild with you, as many times as it takes.</p>
+      <div class="note-box"><b>See mine for inspiration:</b> <a class="inline-link" href="https://k4nika1111.github.io/kayplanner/" target="_blank" rel="noopener">k4nika1111.github.io/kayplanner</a></div>
     </div>
     <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
   </section>
@@ -729,7 +769,7 @@
   </section>
 
   <!-- BACK COVER -->
-  <section class="page fixed-height">
+  <section class="page">
     <div class="backcover">
       <h2>"Data helps us understand the world. AI helps us use it. You're the one who decides what to build."</h2>
       <div class="word">Project KayXplore</div>

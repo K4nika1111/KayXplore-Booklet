@@ -95,6 +95,10 @@
   }
   .cover h1 em{font-style:italic;color:var(--sage-dark);}
   .cover .sub{font-size:15px;color:var(--ink-soft);max-width:78%;line-height:1.55;margin-bottom:0;}
+  .cover-byline{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:500;font-size:16px;
+    color:var(--sage-dark);margin-top:14px;
+  }
   .cover-bottom{display:flex;align-items:flex-end;justify-content:space-between;}
   .cover-tagline{
     font-family:'Caveat',cursive;font-size:23px;color:var(--berry);max-width:62%;line-height:1.25;
@@ -215,6 +219,7 @@
   }
   .backcover h2{font-family:'Fraunces',serif;font-style:italic;color:var(--cream);font-size:26px;line-height:1.3;max-width:82%;font-weight:500;}
   .backcover .word{font-family:'Space Mono',monospace;color:var(--sage-pale);letter-spacing:0.25em;text-transform:uppercase;font-size:11px;margin-top:22px;}
+  .back-byline{font-family:'Work Sans',sans-serif;font-size:12px;color:var(--sage-pale);margin-top:6px;letter-spacing:0.03em;}
 
   @media print{
     body{background:#fff;}
@@ -275,7 +280,7 @@
       <div class="cover-top">
         <div class="cover-word">Project KayXplore</div>
         <h1>From<br>Consumer <em>to</em><br>Creator</h1>
-        <p class="sub">A practical field guide to Data Science, AI, and building things of your own.</p>
+        <p class="sub">A beginner's guide to Data Science, AI, and building things of your own.</p>
       </div>
       <div class="cover-bottom">
         <div class="cover-tagline">the shift from consumer to<br>creator has to be something<br>you choose on purpose.</div>
@@ -426,6 +431,55 @@
       <div class="qblock"><div class="q">Analyze - what pattern do you notice?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
       <div class="qblock"><div class="q">Visualize - how could you draw or show this pattern simply?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
       <div class="qblock"><div class="q">Decide - what would you do differently now that you've seen the pattern?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- SECTION 2.4: TRY IT WITH REAL DATA -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Section 2, cont.</span>
+      <h1 class="page-title">2.4 Try It With Real Data</h1>
+      <p class="lede">Everything so far has been theory. Here's a tiny dataset - do the actual data cycle on it, right now.</p>
+      <table class="tg">
+        <tr><th>Student</th><th>Screen time (hrs/day)</th><th>Mood (1&ndash;5)</th></tr>
+        <tr><td>A</td><td>3.2</td><td>4</td></tr>
+        <tr><td>B</td><td>6.5</td><td>2</td></tr>
+        <tr><td>C</td><td>2.0</td><td>5</td></tr>
+        <tr><td>D</td><td>5.1</td><td>3</td></tr>
+        <tr><td>E</td><td>4.4</td><td>3</td></tr>
+        <tr><td>F</td><td>7.2</td><td>2</td></tr>
+        <tr><td>G</td><td>1.8</td><td>5</td></tr>
+        <tr><td>H</td><td>3.9</td><td>4</td></tr>
+      </table>
+      <ol class="tight">
+        <li>Open Google Sheets or Excel (free, no download needed for Sheets).</li>
+        <li>Type in the 3 columns above.</li>
+        <li>Select the data → Insert → Chart → try a bar or scatter chart.</li>
+        <li>Look at the chart and answer the questions below.</li>
+      </ol>
+      <div class="qblock"><div class="q">Which student has the most screen time - what's their mood?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Does more screen time seem linked to lower mood, based on this data?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="qblock"><div class="q">Is there an outlier - someone who breaks the pattern?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
+      <div class="note-box">Careful: 8 people is not nearly enough to prove anything. One small dataset doesn't confirm a real-world pattern - and correlation (two things moving together) doesn't always mean one causes the other. But this - look, notice, question, dig deeper - is exactly how real data science starts.</div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- REAL EXAMPLE / CASE STUDY -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">A Real Example</span>
+      <h1 class="page-title">One Week, One Chart, One Change</h1>
+      <p class="lede">A student once tracked their own screen time for a week using their phone's built-in report, just like you'll do in Section 3.</p>
+      <div class="card">
+        <p>They found they averaged 5 hours 40 minutes a day, with big spikes on weekends. When they broke it down by app, one app alone - YouTube - made up 62% of that time.</p>
+        <p>So they made one small change: they moved the YouTube app off their home screen and set a daily reminder after 45 minutes of use.</p>
+        <p>The next week, their average screen time dropped by about 45 minutes a day, and they said their evening mood felt noticeably better.</p>
+      </div>
+      <div class="note-box">Your numbers won't be exactly this - and that's fine. The process is what matters: collect, notice, decide, change, recheck. That's the same loop you're about to run on your own life in Section 3.</div>
     </div>
     <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
   </section>
@@ -597,80 +651,64 @@
     <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
   </section>
 
-  <!-- SECTION 5 pg1 Claude -->
+  <!-- SECTION 5 pg1: NEUTRAL TOOLKIT TABLE -->
   <section class="page" data-content>
     <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
     <div class="content">
       <span class="eyebrow">Section 5: Your AI Toolkit</span>
-      <h1 class="page-title">1. Claude: Your Build-It Partner</h1>
-      <p class="lede"><b>Best for:</b> turning an idea into something real - writing, planning, and especially vibe coding your own project from scratch.</p>
-      <img class="page-img" src="https://images.unsplash.com/photo-1603575448360-153f093fd0b2?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Person typing on a laptop, building something new">
-      <p class="body-text">Claude holds a long, careful conversation with you - exactly what you need when building rather than asking a quick one-off question. <b>Vibe coding</b> means describing what you want in plain, everyday English and having it write the actual working code, refining it together until it feels right. You don't need to know how to code to start - just describe clearly what you want (see Section 4.2).</p>
-      <ul class="tight">
-        <li>Writes full, working code for websites, games, and apps from a plain-language description.</li>
-        <li>Holds long, detailed conversations without losing track of your project.</li>
-        <li>Explains what it built so you actually learn as you go.</li>
-        <li>Drafts and polishes long pieces of writing - even a booklet like this one.</li>
-        <li>Asks clarifying questions before diving in, so you spend less time correcting wrong turns.</li>
-      </ul>
+      <h1 class="page-title">A Quick Map of the Tools Out There</h1>
+      <p class="lede">Different tools are good at different jobs - the same way you wouldn't use a hammer to cut paper. This list will change as tools do; what won't change is knowing what to look for.</p>
+      <table class="tg">
+        <tr><th>Tool</th><th>Best for</th></tr>
+        <tr><td class="strong">Claude</td><td>Long, careful conversations - writing, planning, and "vibe coding" a project from a plain description.</td></tr>
+        <tr><td class="strong">ChatGPT</td><td>Explaining topics, drafting text, general Q&amp;A, debugging code.</td></tr>
+        <tr><td class="strong">Perplexity</td><td>Research with citations - finding credible sources fast.</td></tr>
+        <tr><td class="strong">NotebookLM</td><td>Turning your own notes or textbook into summaries and quizzes.</td></tr>
+        <tr><td class="strong">TurboLearn AI</td><td>Turning a lecture, video, or PDF into notes and flashcards.</td></tr>
+        <tr><td class="strong">Canva</td><td>Posters, presentations, and social graphics, fast.</td></tr>
+        <tr><td class="strong">Gamma</td><td>Turning an outline into a slide deck or simple webpage.</td></tr>
+        <tr><td class="strong">Grammarly</td><td>Polishing grammar, tone, and clarity in your writing.</td></tr>
+        <tr><td class="strong">Notion AI</td><td>Organizing notes, projects, and to-do lists.</td></tr>
+        <tr><td class="strong">Quizlet</td><td>Flashcards and quizzes for memorizing material.</td></tr>
+      </table>
+      <p class="body-text">My pick for building is Claude - you can try it, or use whatever tool fits you best.</p>
     </div>
     <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
   </section>
 
-  <!-- SECTION 5 pg1b: vibe coding prompts -->
+  <!-- SECTION 5 pg2: TRY BUILDING SOMETHING, RIGHT NOW -->
   <section class="page" data-content>
     <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
     <div class="content">
       <span class="eyebrow">Section 5, cont.</span>
-      <h1 class="page-title">Try Vibe Coding Right Now</h1>
-      <p class="lede">Copy one of these straight into Claude and see what happens.</p>
+      <h1 class="page-title">Try Building Something, Right Now</h1>
+      <div class="note-box">Quick clarification: "you don't need to code" doesn't mean you don't need to think. AI handles the syntax - the commas, the brackets. You still work out the logic: what happens first, what repeats, what decides the outcome. That thinking is yours; the typing is AI's job.</div>
+      <p class="body-text" style="margin-top:10px;">Paste one of these into whichever AI tool you're using:</p>
       <div class="note-box">
-        <i>"I want to vibe code a simple browser game called [name]. It should be [describe it]. Here's how you win or lose: [describe the rule]. Keep visuals simple and colourful. Build it as a single HTML file. Explain each part briefly, and ask me questions first if anything is unclear."</i>
+        <i>"Build a simple browser game called [name]. It should be [describe it]. Here's how you win or lose: [rule]. Keep visuals simple and colourful. Build it as one HTML file. Explain each part briefly, and ask me questions first if anything's unclear."</i>
       </div>
-      <div class="note-box" style="margin-top:10px;">
-        <i>"I want to vibe code a one-page personal website about me. Include: my name and a short intro, 3 things I'm interested in, one project I'm proud of, and a way to contact me. Use a clean design with colour theme [pick colours]. Build it as a single HTML file. Ask me clarifying questions first."</i>
+      <div class="note-box" style="margin-top:8px;">
+        <i>"Build a one-page personal website about me: my name and a short intro, 3 things I'm into, one project I'm proud of, and a way to contact me. Clean design, colour theme [pick colours]. Build it as one HTML file. Ask me clarifying questions first."</i>
       </div>
-      <p class="body-text" style="margin-top:12px;">The first version is never final - tell it exactly what to change, and it will rebuild with you, as many times as it takes.</p>
-      <div class="note-box"><b>See mine for inspiration:</b> <a class="inline-link" href="https://k4nika1111.github.io/kayplanner/" target="_blank" rel="noopener">k4nika1111.github.io/kayplanner</a></div>
+      <p class="body-text" style="margin-top:10px;">The first version is never final - tell it exactly what to change, and it will rebuild with you, as many times as it takes.</p>
+      <div class="note-box">See an example: <a class="inline-link" href="https://k4nika1111.github.io/kayplanner/" target="_blank" rel="noopener">k4nika1111.github.io/kayplanner</a></div>
     </div>
     <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
   </section>
 
-  <!-- SECTION 5 pg2 -->
+  <!-- SECTION 5 pg3: SKILLS THAT AGE BETTER THAN TOOLS -->
   <section class="page" data-content>
     <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
     <div class="content">
       <span class="eyebrow">Section 5, cont.</span>
-      <h1 class="page-title">More Tools Worth Knowing</h1>
-      <div class="card" style="margin-bottom:8px;"><h3>2. ChatGPT: The All-Purpose AI Assistant</h3><p><b>Best for:</b> explaining complex topics, drafting text, and debugging code.</p><ul><li>Explains complex concepts in simple terms.</li><li>Helps draft essays, emails, and reports.</li><li>Solves math, coding, and reasoning problems.</li><li>Summarizes long research papers or articles.</li><li>Generates study notes and presentation outlines.</li></ul><p>Like having a knowledgeable, 24/7 tutor available to answer your questions.</p></div>
-      <div class="card" style="margin-bottom:8px;"><h3>3. Perplexity AI: The Citable Research Engine</h3><p><b>Best for:</b> research papers, fact-checking, finding credible sources.</p><ul><li>Provides concise answers with direct citations.</li><li>Ideal for finding credible sources for an assignment.</li><li>Helps you write factual, well-supported academic content.</li></ul></div>
-      <div class="card"><h3>4. NotebookLM: Your Document-Only Study Partner</h3><p><b>Best for:</b> turning your own notes or textbook into summaries and quizzes, using ONLY the material you give it.</p><ul><li>Summarizes long readings into key points.</li><li>Generates quiz questions based only on your uploaded material.</li><li>Points to exactly where in your notes an answer came from.</li></ul></div>
-    </div>
-    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
-  </section>
-
-  <!-- SECTION 5 pg3 -->
-  <section class="page" data-content>
-    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
-    <div class="content">
-      <span class="eyebrow">Section 5, cont.</span>
-      <h1 class="page-title">More Tools Worth Knowing</h1>
-      <div class="card" style="margin-bottom:8px;"><h3>5. TurboLearn AI: Lecture-to-Notes, Instantly</h3><p><b>Best for:</b> turning a recorded lecture, YouTube video, or PDF into notes you can revise from.</p><ul><li>Converts a lecture or class recording into structured notes.</li><li>Turns a PDF chapter into flashcards automatically.</li><li>Creates a short podcast-style audio summary.</li><li>Re-explains a confusing part in simpler words.</li><li>Generates an instant quiz to test what you retained.</li></ul></div>
-      <div class="card" style="margin-bottom:8px;"><h3>6. Canva: Design Without the Learning Curve</h3><p><b>Best for:</b> making anything look professional fast - posters, presentations, social posts.</p><ul><li>Generates a full poster or presentation layout from one sentence.</li><li>Suggests colour palettes and fonts that actually match.</li><li>Removes photo backgrounds and resizes designs instantly.</li></ul></div>
-      <div class="card"><h3>7. Gamma: Idea-to-Slide-Deck in Minutes</h3><p><b>Best for:</b> turning an outline or idea into a full slide deck or simple webpage, fast.</p><ul><li>Converts an outline into a complete slide deck.</li><li>Builds simple one-page websites from a text description.</li><li>Automatically picks layouts, images, and formatting.</li></ul></div>
-    </div>
-    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
-  </section>
-
-  <!-- SECTION 5 pg4 -->
-  <section class="page" data-content>
-    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
-    <div class="content">
-      <span class="eyebrow">Section 5, cont.</span>
-      <h1 class="page-title">Rounding Out the Toolkit</h1>
-      <div class="card" style="margin-bottom:8px;"><h3>8. Grammarly: The Professional Writing Editor</h3><p><b>Best for:</b> enhancing essays, emails, and professional documents.</p><ul><li>Fixes grammar, spelling, and punctuation errors.</li><li>Improves tone, clarity, and sentence structure.</li><li>Suggests stronger vocabulary and rewrites awkward sentences.</li></ul></div>
-      <div class="card" style="margin-bottom:8px;"><h3>9. Notion AI: The Ultimate Organization Hub</h3><p><b>Best for:</b> organizing notes, managing projects, personal wikis.</p><ul><li>Instantly summarizes lengthy class notes.</li><li>Creates tables, to-do lists, and action items automatically.</li><li>Assists in project planning and scheduling.</li></ul></div>
-      <div class="card"><h3>10. Quizlet: Interactive Exam Preparation</h3><p><b>Best for:</b> memorizing key concepts, vocabulary, and formulas.</p><ul><li>Generates interactive flashcards and practice quizzes from your notes.</li><li>Identifies concepts you struggle with.</li><li>Helps memorize formulas, key dates, and terminology.</li></ul></div>
+      <h1 class="page-title">Skills That Age Better Than Tools</h1>
+      <p class="lede">Tools will change - some of the ones on the last page might not exist in a few years. These four skills will still matter.</p>
+      <div class="grid-2">
+        <div class="card"><h3>Break it into pieces</h3><p>Before asking AI for anything, break your idea into the smallest steps you can. AI handles a small, clear ask much better than one giant vague one.</p></div>
+        <div class="card"><h3>Evaluate the output</h3><p>Does this actually make sense? Does it match what I asked for? Could I explain this to a friend? If not, question it before you use it.</p></div>
+        <div class="card"><h3>Learn to debug</h3><p>When something breaks, that's normal, not failure. Describe exactly what happened vs. what you expected, and ask AI to explain the error before fixing it blindly.</p></div>
+        <div class="card"><h3>Ask better questions</h3><p>The clearer your question, the more useful the answer - with AI and with people. Revisit Section 4.2 whenever a prompt isn't working.</p></div>
+      </div>
     </div>
     <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
   </section>
@@ -696,6 +734,21 @@
       <div class="qblock"><div class="q">Who else might have this same problem?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
       <div class="qblock"><div class="q">What would the simplest possible version of a fix look like?</div><div class="writeline" contenteditable="true" data-ph="write here..."></div></div>
       <div class="qblock"><div class="q">My idea:</div><div class="writeline" contenteditable="true" data-ph="write here..."></div><div class="writeline" contenteditable="true" data-ph=""></div></div>
+    </div>
+    <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
+  </section>
+
+  <!-- APPENDIX: HOW TO ACTUALLY RUN WHAT YOU BUILD -->
+  <section class="page" data-content>
+    <div class="kaymark">KayXplore</div><div class="sprig-mount"></div>
+    <div class="content">
+      <span class="eyebrow">Quick Appendix</span>
+      <h1 class="page-title">How to Actually Run What You Build</h1>
+      <p class="lede">AI will give you a block of code. Here's what to actually do with it, in 3 steps.</p>
+      <div class="card" style="margin-bottom:8px;"><h3>Step 1: Get a text editor</h3><p>Download a free one like Visual Studio Code (VS Code). This is just where you'll paste and save code - not where you write it from scratch.</p></div>
+      <div class="card" style="margin-bottom:8px;"><h3>Step 2: Save it as one file</h3><p>Copy the full code block the AI gave you, paste it into a new file in your editor, and save it as <b>index.html</b> (exactly that name and ending).</p></div>
+      <div class="card"><h3>Step 3: Open it</h3><p>Find that saved file and double-click it. It will open in your web browser and run - that's your project, live.</p></div>
+      <div class="note-box" style="margin-top:10px;">If something looks broken, don't panic. Copy the exact error message (or describe what happened) back to the AI and ask it to explain and fix it - see "Learn to debug" in Section 5.</div>
     </div>
     <div class="footer-bar"><span class="footer-num"></span><span class="footer-mark">KayXplore</span></div>
   </section>
@@ -791,6 +844,7 @@
     <div class="backcover">
       <h2>"Data helps us understand the world. AI helps us use it. You're the one who decides what to build."</h2>
       <div class="word">Project KayXplore</div>
+      <div class="back-byline">By Kanika Jain</div>
     </div>
   </section>
 

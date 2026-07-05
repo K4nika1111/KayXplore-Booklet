@@ -227,13 +227,31 @@
     .page:last-child{page-break-after:auto;}
   }
 
+  @media (min-width:1024px){
+    .book{max-width:1000px;}
+    h1.page-title{font-size:29px;}
+    h2.sub-title{font-size:16.5px;}
+    p.lede{font-size:12.5px;}
+    p.body-text{font-size:12px;}
+    .card h3{font-size:14px;}
+    .card p{font-size:11.5px;}
+    .card ul li{font-size:11px;}
+    table.tg{font-size:11.5px;}
+    .qblock .q{font-size:12px;}
+    ol.tight li, ul.tight li{font-size:12px;}
+    .myth-box{font-size:11.5px;}
+    .note-box{font-size:11.5px;}
+    .idea-list li{font-size:12.5px;}
+    .eyebrow{font-size:11px;}
+    .writeline{font-size:17px;}
+  }
+
   @media (max-width:720px){
-    .page{aspect-ratio:auto;min-height:auto;padding:26px 18px 30px;}
-    .content{height:auto;overflow:visible;margin-top:50px;}
-    .cover h1{font-size:34px;}
+    .page{aspect-ratio:auto;min-height:auto;padding:30px 22px 34px;}
+    .content{height:auto;overflow:visible;margin-top:56px;}
+    .cover h1{font-size:38px;}
     .grid-2,.grid-3{grid-template-columns:1fr;}
-    .habit-grid{grid-template-columns:repeat(4,1fr);}
-    table.tg{font-size:10px;}
+    .habit-grid{grid-template-columns:repeat(3,1fr);}
   }
 </style>
 </head>
